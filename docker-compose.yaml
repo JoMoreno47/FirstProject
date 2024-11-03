@@ -12,7 +12,9 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - mysql_data:/var/lib/mysql 
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app_network                           # Conectar a la red personalizada
 
   nest-app:
     build:
@@ -30,6 +32,12 @@ services:
     depends_on:
       - mysql-db
     command: npm run start:dev
+    networks:
+      - app_network                           # Conectar a la red personalizada
 
 volumes:
   mysql_data:
+
+networks:
+  app_network:
+    driver: bridge                                 # Definición de la red personalizada
