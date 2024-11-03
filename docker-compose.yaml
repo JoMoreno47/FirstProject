@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  mysql-db:
+    image: mysql:8.0  
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword       # Contraseña del usuario root
+      MYSQL_DATABASE: usuarios                # Nombre de la base de datos
+      MYSQL_USER: user                        # Usuario de la base de datos
+      MYSQL_PASSWORD: userpassword            # Contraseña del usuario
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql 
+
+  nest-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nest_app_container
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: mysql-db                        # Apuntando al nombre del servicio mysql-db
+      DB_PORT: 3306
+      DB_USERNAME: user                        # Usuario definido en el servicio mysql-db
+      DB_PASSWORD: userpassword                # Contraseña correcta del usuario de la base de datos
+      DB_DATABASE: usuarios
+    depends_on:
+      - mysql-db
+    command: npm run start:dev
+
+volumes:
+  mysql_data:

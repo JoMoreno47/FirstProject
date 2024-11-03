@@ -1,0 +1,26 @@
+# Node modules
+node_modules/
+
+# Dist directory (for compiled files)
+dist/
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Coverage directory
+coverage/
+
+# Build output
+build/
+
+# Temporary files
+tmp/
+temp/
